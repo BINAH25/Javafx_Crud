@@ -11,10 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CrudController implements Initializable {
     @FXML
@@ -167,6 +164,42 @@ public class CrudController implements Initializable {
     }
 
     public void deleteStudent(){
+        connect = Database.connect();
+        try {
+
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation  Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete Student with ID:" + student_number.getText()+ "?");
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if(option.get().equals(ButtonType.OK)){
+                String deleteData = "DELETE FROM student_info WHERE student_number = "+ student_number.getText();
+                prepare = connect.prepareStatement(deleteData);
+                prepare.executeUpdate();
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Student  Deleted Successfully");
+                alert.showAndWait();
+
+                // TO UPDATE THE TABLE VIEW
+                showStudentData();
+                // TO CLEAR THE STUDENT FORM
+                clearForm();
+            }else{
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Action Cancelled..");
+                alert.showAndWait();
+            }
+
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
     public void clearForm(){
