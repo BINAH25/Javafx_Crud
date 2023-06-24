@@ -62,7 +62,7 @@
                                     <Font size="20.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="update_btn" layoutX="171.0" layoutY="424.0" mnemonicParsing="false" prefHeight="35.0" styleClass="btn" stylesheets="@crud.css" text="Update">
+                              <Button fx:id="update_btn" layoutX="171.0" layoutY="424.0" mnemonicParsing="false" onAction="#updateStudent" prefHeight="35.0" styleClass="btn" stylesheets="@crud.css" text="Update">
                                  <font>
                                     <Font size="20.0" />
                                  </font>

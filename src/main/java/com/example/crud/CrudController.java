@@ -125,7 +125,44 @@ public class CrudController implements Initializable {
         }
     }
 
-    public void updateStuden(){
+    public void updateStudent(){
+        connect = Database.connect();
+        try {
+            if(student_number.getText().isEmpty()
+                    || full_name.getText().isEmpty()
+                    || year.getSelectionModel().getSelectedItem() == null
+                    || course.getSelectionModel().getSelectedItem() == null
+                    || gender.getSelectionModel().getSelectedItem() == null){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all the blanks fields ");
+                alert.showAndWait();
+            }else{
+                String updateData = "UPDATE student_info SET "
+                        + "full_name = '" + full_name.getText()
+                        + "',year = '"+ year.getSelectionModel().getSelectedItem()
+                        + "',course = '"+ course.getSelectionModel().getSelectedItem()
+                        + "',gender = '"+ gender.getSelectionModel().getSelectedItem()
+                        + "'WHERE student_number = " + student_number.getText();
+                prepare = connect.prepareStatement(updateData);
+                prepare.executeUpdate();
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Student Information Updated Successfully");
+                alert.showAndWait();
+
+                // TO UPDATE THE TABLE VIEW
+                showStudentData();
+                // TO CLEAR THE STUDENT FORM
+                clearForm();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 
